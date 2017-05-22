@@ -1,0 +1,28 @@
+from rsf.proj import *
+
+# generate four velocity anormalies
+Flow('vel',None,
+     	'''
+        math output="
+       exp(-((x1-3)*(x1-3)+(x2-3)*(x2-3))/(2*2.3*2.3))-
+       exp(-((x1-7)*(x1-7)+(x2-3)*(x2-3))/(2*2.5*2.5))+
+       exp(-((x1-7)*(x1-7)+(x2-7)*(x2-7))/(2*2.4*2.4))-
+       exp(-((x1-3)*(x1-3)+(x2-7)*(x2-7))/(2*2.6*2.6))
+        " n1=100 d1=0.1 
+        o1=0. n2=100 d2=0.1 o2=0. | sfput label1=z 
+        unit1=km label2=x unit2=km |
+        scale rscale=-1. | sfadd add=3
+     	''')
+
+
+Result('vel',
+       '''
+       grey title="velocity model: Gaussian anomaly" 
+       title="" pclip=100 screenratio=1 bias=3 scalebar=y bartype=v 
+       ''')
+
+
+#use sfwindow to select 5-th shot and display it using sfgrey
+
+
+End()

@@ -1,0 +1,30 @@
+unset key
+### set output format
+#set terminal pdfcairo
+set terminal postscript eps font "Arial, 32"
+#set size 1.2, 1
+set output sprintf("map.eps")
+### set color
+set format cb "%1.3f"
+
+set palette gray
+#unset colorbox
+#r=0.05 #souspp
+r=0.01 #souvx
+set cbrange [-1*r:1*r]
+### set xy label 
+set ylabel "Depth (km)"
+set x2label 'Position (km)'
+set x2tics ( '1.0' 200,'2.0' 400,'3.0' 600)
+unset xtics
+set ytics ('0.4' 75, '1.1' 225,'1.8' 375)
+### plot range and tics
+set xrange [1:801]
+set yrange [1:501] reverse
+### transpose data
+!transp n1=501 </net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/layer/souvz1>input_tran1.bin
+set cblabel "Vertical component (vz)" 
+### plot
+plot "input_tran1.bin" binary array=801x501 format="%float"  with image
+#
+!rm input_tran1.bin

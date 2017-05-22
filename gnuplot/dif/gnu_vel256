@@ -1,0 +1,29 @@
+unset key
+### set output format
+#set terminal pdfcairo
+set terminal postscript eps
+set output sprintf("P_vel.eps")
+### set color
+#set palette file "-"
+#0 0 1
+#1 1 1
+#1 0 0
+#e
+#set colorbox
+#r=0.01
+#set cbrange [-1*r:1*r]
+### set xy label 
+set ylabel "Depth (km)"
+set xlabel 'Position (km)'
+set xtics ('0.0' 1, '0.5' 100, '1.0' 200)
+set ytics ('0.0' 1, '0.5' 100, '1.0' 200)
+### plot range and tics
+set xrange [1:256]
+set yrange [1:256] reverse
+### transpose data
+!transp n1=256 <vpmodel>input_tran1.bin
+### plot
+set title 'P-velocity'
+plot "input_tran1.bin" binary array=256x256 format="%float"  with image
+#
+!rm input_tran1.bin

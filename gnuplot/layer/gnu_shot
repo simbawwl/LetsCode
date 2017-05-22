@@ -1,0 +1,41 @@
+unset key
+### set output format
+#set terminal png
+set terminal postscript eps font "Arial, 16" 
+set output sprintf("shot_layer.eps")
+#set output sprintf("shot.png")
+### set color
+set palette file "-"
+0 0 1
+1 1 1
+1 0 0
+e
+set format cb "%1.5f"
+unset colorbox
+### set xy label 
+set ylabel "Time (s)"
+set x2label 'Position (km)'
+### plot range and tics
+set xrange [1:801]
+set yrange [1:4001] reverse
+set ytics ('0.00' 0,'0.25' 500,'0.50' 1000,'0.75' 1500,'1.00' 2000,'1.25' 2500,'1.50' 3000,'1.75' 3500,'2.00' 4000)
+unset xtics
+set x2tics('0' 0.0,'1.0' 200.0,'2.0' 400.0,'3.0' 600.0)
+### plot
+set multiplot layout 1,2
+r=0.0001
+set cbrange [-1*r:1*r]
+set size 0.47,1
+#unset colorbox
+#set xlabel 'Horizontal'
+#set title ('PP')
+plot "/net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/layer/f2101" binary array=801x4001 format="%float"  with image
+#set xlabel 'Vertical' 
+#set title ('PS')
+unset ylabel
+unset ytics
+set size 0.45,1
+set colorbox
+plot "/net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/layer/f2201" binary array=801x4001 format="%float"  with image
+set key off
+#

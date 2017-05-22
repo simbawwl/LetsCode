@@ -1,0 +1,119 @@
+unset key
+set macros
+### set output format
+#set terminal pdfcairo
+c=5
+set terminal postscript eps size 35.0/c,17.0/c
+set output sprintf("snap.eps")
+### set color
+set palette file "-"
+0 0 1
+1 1 1
+1 0 0
+e
+#set colorbox
+#r=0.00002
+r=1.4
+set cbrange [-1*r:1*r]
+### set xy label 
+### plot range and tics
+### transpose data
+#!cp snap_h_1 input_h_1.bin
+#!cp snap_v_1 input_v_1.bin
+#!cp snap_h_2 input_h_2.bin
+#!cp snap_v_2 input_v_2.bin
+#!cp snap_h_3 input_h_3.bin
+#!cp snap_v_3 input_v_3.bin
+#!cp snap_h_4 input_h_4.bin
+#!cp snap_v_4 input_v_4.bin
+#!cp snap_h_5 input_h_5.bin
+#!cp snap_v_5 input_v_5.bin
+!transp n1=501 <snap_h_1>input_h_1.bin
+!transp n1=501 <snap_v_1>input_v_1.bin
+!transp n1=501 <snap_h_2>input_h_2.bin
+!transp n1=501 <snap_v_2>input_v_2.bin
+!transp n1=501 <snap_h_3>input_h_3.bin
+!transp n1=501 <snap_v_3>input_v_3.bin
+!transp n1=501 <snap_h_4>input_h_4.bin
+!transp n1=501 <snap_v_4>input_v_4.bin
+!transp n1=501 <snap_h_5>input_h_5.bin
+!transp n1=501 <snap_v_5>input_v_5.bin
+NOTICS="unset title; unset xlabel;unset ylabel;unset xtics;unset ytics; unset x2tics; unset y2tics; unset colorbox"
+TICS="set xlabel 'X position (km)'; set ylabel 'Depth (km)'; set ytics('0.0' 0.0,'0.5' 100.0,'1.0' 200.0,'1.5' 300.0,'2.0' 400.0,'2.5' 500.0) in; set xtics('0.0' 0.0,'1.0' 200.0,'2.0' 400.0,'3.0' 600.0,'4.0' 800.0) in; set grid front; unset grid"
+vsize=0.35
+hsize=0.17
+lmarg=0.06
+tmarg=0.88
+mmarg=0.08
+TMARGIN = "set tmargin at screen tmarg; set bmargin at screen tmarg-vsize"
+BMARGIN = "set tmargin at screen tmarg-vsize-mmarg; set bmargin at screen tmarg-vsize-mmarg-vsize"
+LMARGIN1 = "set lmargin at screen lmarg; set rmargin at screen lmarg+hsize"
+LMARGIN2 = "set lmargin at screen lmarg+hsize*1; set rmargin at screen lmarg+hsize*2"
+LMARGIN3 = "set lmargin at screen lmarg+hsize*2; set rmargin at screen lmarg+hsize*3"
+LMARGIN4 = "set lmargin at screen lmarg+hsize*3; set rmargin at screen lmarg+hsize*4"
+LMARGIN5 = "set lmargin at screen lmarg+hsize*4; set rmargin at screen lmarg+hsize*5"
+set style line 1 lt 2 lc rgb "black" lw 3
+@NOTICS
+### plot
+set multiplot layout 2,5 rowsfirst
+set xrange [1:801]
+set yrange [1:501] reverse
+
+#set title 'Horizontal Component'
+@TICS;unset xlabel;
+@TMARGIN; @LMARGIN1
+set title "T=0.3(s)"
+plot "input_h_1.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@NOTICS
+@TMARGIN; @LMARGIN2
+set title "T=0.6(s)"
+plot "input_h_2.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@TMARGIN; @LMARGIN3
+set title "T=0.9(s)"
+plot "input_h_3.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@TMARGIN; @LMARGIN4
+set title "T=1.2(s)"
+plot "input_h_4.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@TMARGIN; @LMARGIN5
+set title "T=1.5(s)"
+plot "input_h_5.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+#
+#set title 'Vertical Component'
+
+@NOTICS
+@TICS;
+@BMARGIN; @LMARGIN1
+plot "input_v_1.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@NOTICS
+@BMARGIN; @LMARGIN2
+plot "input_v_2.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@BMARGIN; @LMARGIN3
+plot "input_v_3.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@BMARGIN; @LMARGIN4
+plot "input_v_4.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+@BMARGIN; @LMARGIN5
+set colorbox vertical user origin lmarg+hsize*5+0.01, 0.1 size 0.02,0.78
+set label 1 'Horizontal'  at screen 0.46, 0.97
+set label 2 'Vertical'  at screen  0.47, 0.49
+plot "input_v_5.bin" binary array=801x501 format="%float" with image
+plot [1:801] 101 ls 1
+### delete temp files
+!rm input_h_1.bin	
+!rm input_v_1.bin	
+!rm input_h_2.bin	
+!rm input_v_2.bin	
+!rm input_h_3.bin	
+!rm input_v_3.bin	
+!rm input_h_4.bin	
+!rm input_v_4.bin	
+!rm input_h_5.bin	
+!rm input_v_5.bin	

@@ -1,0 +1,35 @@
+unset key
+### set output format
+#set terminal pdfcairo
+c=5
+set terminal postscript eps enhanced size 1.001*c, 0.421*c font "Arial, 16"
+set output sprintf("image.eps")
+set format cb "%1.2f"
+### set color
+#set palette file "-"
+#0 0 1
+#1 1 1
+#1 0 0
+#e
+set colorbox
+r=1
+set cbrange [-1*r:1*r]
+### set xy label 
+set ylabel "Depth (km)"
+#set x2label 'Position (km)'
+#set x2tics ( '1.0' 200,'2.0' 400,'3.0' 600,'4.0' 800,'5.0' 1000)
+unset xtics
+set ytics ('0.0' 1, '0.5' 100, '1.0' 200,'1.5' 300,'2.0' 400)
+### plot range and tics
+set xrange [1:1001]
+set yrange [1:451] reverse
+### transpose data
+!transp n1=451 </net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/mar_img/rfl_p_filt>input_tran1.bin
+### plot
+#unset colorbox
+set cblabel "Amplitude"
+#set title 'PS Image'
+plot "input_tran1.bin" binary array=1001x451 format="%float"  with image
+#set size 0.5,1
+#
+!rm input_tran1.bin

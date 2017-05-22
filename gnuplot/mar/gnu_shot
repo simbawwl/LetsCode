@@ -1,0 +1,42 @@
+unset key
+### set output format
+#set terminal png
+set terminal postscript eps font "Arial, 16"
+set output sprintf("shot_mar.eps")
+#set output sprintf("shot.png")
+### set color
+set palette file "-"
+0 0 1
+1 1 1
+1 0 0
+e
+unset colorbox
+set format cb "%1.4f"
+### set xy label 
+set ylabel "Time (s)"
+set x2label 'Position (km)'
+### plot range and tics
+set xrange [1:1001]
+set yrange [1:8000] reverse
+set ytics ('0.00' 0,'1.00' 2000,'2.00' 4000,'3.00' 6000,'4.00' 8000)
+unset xtics
+set x2tics('1.0' 200.0,'2.0' 400.0,'3.0' 600.0,'4.0' 800.0)
+### plot
+set multiplot layout 1,2
+r=0.0005
+set cbrange [-1*r:1*r]
+set size 0.47,1
+#unset colorbox
+#set xlabel 'Horizontal'
+#set title ('PP')
+plot "/net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/mar_img/f2301" binary array=1001x8000 format="%float"  with image
+#set xlabel 'Vertical'
+#set title ('PS')
+unset ylabel
+unset ytics
+set size 0.45,1
+set colorbox
+plot "/net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/mar_img/f2401" binary array=1001x8000 format="%float"  with image
+! rm seis.hor
+! rm seis.ver
+#

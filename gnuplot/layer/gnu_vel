@@ -1,0 +1,31 @@
+unset key
+### set output format
+#set terminal pdfcairo
+set terminal postscript eps font "Arial, 16"
+set output sprintf("vel.eps")
+set palette gray negative
+set format cb "%1.1f"
+### set color
+#set palette file "-"
+#0 0 1
+#1 1 1
+#1 0 0
+#e
+#set colorbox
+#r=0.01
+#set cbrange [-1*r:1*r]
+### set xy label 
+set ylabel "Depth (km)"
+set xlabel 'Position (km)'
+set xtics ('0.0' 1, '1.0' 200,'2.0' 400,'3.0' 600,'4.0' 800)
+set ytics ('0.0' 1, '0.5' 100, '1.0' 200,'1.5' 300,'2.0' 400,'2.5' 500)
+### plot range and tics
+set xrange [1:801]
+set yrange [1:501] reverse
+### transpose data
+!transp n1=501 </net/kong/li/1/wxw120130/Proj_1_Comp/2D_VisElas_stg_damp_Feng/data_demo/layer/smvpmodel>input_tran1.bin
+### plot
+#set title 'P-velocity'
+plot "input_tran1.bin" binary array=801x501 format="%float"  with image
+#
+!rm input_tran1.bin

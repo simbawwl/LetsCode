@@ -1,0 +1,75 @@
+unset key
+set macros
+### set output format
+#set terminal pdfcairo
+c=3
+set terminal postscript eps size 11.0/c,20.0/c
+set output sprintf("snap_single.eps")
+set format cb "%1.2f"
+### set color
+set palette file "-"
+0 0 1
+1 1 1
+1 0 0
+e
+#set colorbox
+### set xy label 
+set yrange [1:256] reverse
+### plot range and tics
+### transpose data
+!transp n1=256 <snap_h_2>input_h_1.bin
+!transp n1=256 <snap_v_2>input_v_1.bin
+NOTICS="unset title; unset xlabel;unset ylabel;unset xtics;unset ytics; unset x2tics; unset y2tics; unset colorbox"
+TICS="set xtics('0.00' 0.0,'1.28' 64.0,'2.56' 128.0,'3.84' 192.0,'5.12' 255.0) in; set ytics('0.00' 0,'1.28' 64.0,'2.56' 128.0,'3.84' 192.0,'5.12' 255.0) in; set grid front; unset grid"
+vsize=0.11
+hsize=0.13
+lmarg=0.07
+tmarg=0.88
+mmarg=0.08
+TMARGIN = "set tmargin at screen tmarg; set bmargin at screen tmarg-vsize"
+BMARGIN = "set tmargin at screen tmarg-vsize-mmarg; set bmargin at screen tmarg-vsize-mmarg-vsize"
+LMARGIN1 = "set lmargin at screen lmarg; set rmargin at screen lmarg+hsize"
+LMARGIN2 = "set lmargin at screen lmarg+hsize*1; set rmargin at screen lmarg+hsize*2"
+LMARGIN3 = "set lmargin at screen lmarg+hsize*2; set rmargin at screen lmarg+hsize*3"
+LMARGIN4 = "set lmargin at screen lmarg+hsize*3; set rmargin at screen lmarg+hsize*4"
+LMARGIN5 = "set lmargin at screen lmarg+hsize*4; set rmargin at screen lmarg+hsize*5"
+
+
+#set style line 1 lt 2 lc rgb "black" lw 3
+@NOTICS
+### plot
+r=0.2
+set cbrange [-1*r:1*r]
+set multiplot layout 2,1 rowsfirst
+#set title 'Horizontal Component'
+@TICS;unset xlabel;
+set xtics font "Times-Roman, 20"
+set ytics font "Times-Roman, 20"
+set xlabel font "Times-Roman, 20"
+set ylabel font "Times-Roman, 20"
+set cbtics font "Times-Roman, 20"
+set title font "Times-Roman, 20"
+#@TMARGIN; @LMARGIN1
+#set title "Horizontal"
+plot "input_h_1.bin" binary array=256x256 format="%float" with image
+
+#
+#set title 'Vertical Component'
+r=0.2
+set cbrange [-1*r:1*r]
+
+@NOTICS
+@TICS;
+set xtics font "Times-Roman, 20"
+set ytics font "Times-Roman, 20"
+set xlabel font "Times-Roman, 20"
+set ylabel font "Times-Roman, 20"
+set cbtics font "Times-Roman, 20"
+set title font "Times-Roman, 20"
+#@BMARGIN; @LMARGIN1
+#set title "Vertical"
+plot "input_v_1.bin" binary array=256x256 format="%float" with image
+@NOTICS
+### delete temp files
+!rm input_h_1.bin	
+!rm input_v_1.bin	
