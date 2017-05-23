@@ -1,0 +1,17 @@
+from rsf.proj import *
+
+
+#Flow('overthrust_part','overthrust',
+#       '''
+#	window f1=200 n1=301 f2=300 n2=301 n3=160 | transp plane=13 
+#       ''')
+
+
+
+Result('overthrust_part',
+       '''
+       byte maxval=6000 minval=2000 bias=4000 | grey3 title="Velocity model: Overthrust" 
+       color=i gainpanel=a barreverse=y
+       flat=n frame1=150 frame2=200 frame3=50 
+       ''')
+End()

@@ -1,0 +1,11 @@
+from rsf.proj import *
+
+
+
+Result('rfl_p',
+       '''
+       byte clip=1e-5 | grey3 title="PP image" 
+       color=i gainpanel=a barreverse=y
+       flat=y frame1=80 frame2=150 frame3=150 
+       ''')
+End()
