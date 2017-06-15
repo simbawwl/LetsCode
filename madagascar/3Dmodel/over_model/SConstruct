@@ -1,17 +1,66 @@
 from rsf.proj import *
-
-
-#Flow('overthrust_part','overthrust',
+#### Original model
+#Result('overthrust',
 #       '''
-#	window f1=200 n1=301 f2=300 n2=301 n3=160 | transp plane=13 
+#       byte | grey3 title="Velocity model: Overthrust" 
+#       color=i gainpanel=a barreverse=y
+#       flat=y frame1=80 frame2=150 frame3=150 
 #       ''')
 
-
-
+#### Window the data#
+Flow('overthrust_part','overthrust',
+       '''
+	window f1=50 n1=301 f2=100 n2=301 n3=140 | 
+	scale dscale=0.001 | transp plane=13
+       ''')
+#### Check results
 Result('overthrust_part',
        '''
-       byte maxval=6000 minval=2000 bias=4000 | grey3 title="Velocity model: Overthrust" 
+       byte maxval=6 minval=2 bias=4 | grey3 title="Velocity model: Overthrust" 
        color=i gainpanel=a barreverse=y
-       flat=n frame1=150 frame2=200 frame3=50 
+       flat=y frame1=80 frame2=150 frame3=150 
+       ''')
+
+#### Make first homogeneous layer #
+Flow('vel0',None,
+     '''
+     math output=3.3 n1=20 n2=301 n3=301 d1=0.025 d2=0.025 d3=0.025
+     label1=z unit1=km label2=y unit2=km label3=x unit3=km
+     ''')
+
+#### Combine first layer and the model
+Flow('vel',['vel0','overthrust_part'], 'cat axis=1 ${SOURCES[1:2]}')
+
+
+#### Output & plot the model
+#Result('vel',
+#       '''
+#       byte maxval=6 minval=2 bias=4 | grey3 title="Velocity model: Overthrust" 
+#       color=i gainpanel=a barreverse=y
+#       flat=y frame1=80 frame2=150 frame3=150 
+#       ''')
+
+##### Smoothing the conjunction part of the model
+Flow('vel_1','vel',
+       '''
+	window f1=1 n1=10 
+       ''')
+
+Flow('vel_2','vel',
+       '''
+	window f1=11 n1=20 | smooth rect1=3 repeat=3 
+       ''')
+Flow('vel_3','vel',
+       '''
+	window f1=32 n1=110
+       ''')
+Flow('vel_sm',['vel_1','vel_2', 'vel_3'], 'cat axis=1 ${SOURCES[1:3]}')
+
+##### Output the final model
+Result('vel_sm',
+       '''
+       byte maxval=6 minval=2 bias=4 | grey3 title="Velocity model: Overthrust" 
+       color=i gainpanel=a barreverse=y
+       flat=y frame1=80 frame2=150 frame3=150 
        ''')
 End()

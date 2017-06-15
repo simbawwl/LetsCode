@@ -4,8 +4,15 @@ from rsf.proj import *
 
 Result('rfl_p',
        '''
-       byte clip=1e-5 | grey3 title="PP image" 
+       byte clip=1e1 | grey3 title="PP image" 
        color=i gainpanel=a barreverse=y
        flat=y frame1=80 frame2=150 frame3=150 
        ''')
 End()
+
+#Result('rfl_p',
+#       '''
+#       laplac3 | grey title="PP image" clip=3e-5 
+#       color=i gainpanel=a barreverse=y
+#       ''')
+#End()
