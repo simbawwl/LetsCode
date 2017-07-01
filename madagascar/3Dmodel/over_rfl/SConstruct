@@ -1,12 +1,32 @@
 from rsf.proj import *
 
 
-
 Result('rfl_p',
        '''
-       byte clip=1e1 | grey3 title="PP image" 
-       color=i gainpanel=a barreverse=y
-       flat=y frame1=80 frame2=150 frame3=150 
+	   byte gainpanel=all clip=1e2 bar=bar.rsf|
+       grey3 title="PP image" 
+       color=i scalebar=y barreverse=y
+	   maxval=1e2 minval=-1e2
+       flat=y frame1=90 frame2=160 frame3=160 
+       ''')
+
+Result('rfl_s',
+       '''
+	   byte gainpanel=all clip=1e2 bar=bar.rsf|
+       grey3 title="PS image" 
+       color=i scalebar=y barreverse=y
+	   maxval=1e2 minval=-1e2
+       flat=y frame1=90 frame2=160 frame3=160 
+       ''')
+
+Result('model',
+       '''
+	   byte gainpanel=all maxval=6 minval=2 bias=4 bar=bar.rsf|
+       grey3 title="The model" 
+       color=i scalebar=y barlabel="P-wave velocity (m/s)"
+	   maxval=6 minval=2 bias=4
+       flat=y frame1=90 frame2=160 frame3=160 
+
        ''')
 End()
 
