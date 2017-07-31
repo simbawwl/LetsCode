@@ -7,10 +7,11 @@ from rsf.proj import *
 #       flat=y frame1=80 frame2=150 frame3=150 
 #       ''')
 
+	#window f1=50 n1=301 f2=100 n2=301 n3=140 | 
 #### Window the data#
 Flow('overthrust_part','overthrust',
        '''
-	window f1=50 n1=301 f2=100 n2=301 n3=140 | 
+	window f1=0 n1=151 f2=0 n2=151 n3=140 | 
 	scale dscale=0.001 | transp plane=13
        ''')
 #### Check results
@@ -24,7 +25,7 @@ Result('overthrust_part',
 #### Make first homogeneous layer #
 Flow('vel0',None,
      '''
-     math output=3.3 n1=20 n2=301 n3=301 d1=0.025 d2=0.025 d3=0.025
+     math output=3.5 n1=20 n2=151 n3=151 d1=0.025 d2=0.025 d3=0.025
      label1=z unit1=km label2=y unit2=km label3=x unit3=km
      ''')
 
@@ -54,13 +55,16 @@ Flow('vel_3','vel',
        '''
 	window f1=32 n1=110
        ''')
-Flow('vel_sm',['vel_1','vel_2', 'vel_3'], 'cat axis=1 ${SOURCES[1:3]}')
+Flow('vel_real',['vel_1','vel_2', 'vel_3'], 'cat axis=1 ${SOURCES[1:3]}')
 
 ##### Output the final model
-Result('vel_sm',
+Result('vel_real',
        '''
-       byte maxval=6 minval=2 bias=4 | grey3 title="Velocity model: Overthrust" 
-       color=i gainpanel=a barreverse=y
-       flat=y frame1=80 frame2=150 frame3=150 
+       byte gainpanel=all maxval=6 minval=2 bias=4 bar=bar.rsf|
+       grey3 title="The model"
+       color=i scalebar=y barlabel="P-wave velocity (m/s)"
+       maxval=6 minval=2 bias=4
+       flat=y frame1=90 frame2=160 frame3=160
+
        ''')
 End()
