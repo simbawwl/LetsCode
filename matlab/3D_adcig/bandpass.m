@@ -1,6 +1,9 @@
 function b=bandpass(a,nt,dt,flow,fhigh)
 
+nt_old=nt;
 f_max=1./dt;
+a=padpow2(a);
+nt=length(a);
 df=f_max/nt;
 
 
@@ -40,7 +43,7 @@ a_f=fft(a);
 
 b_f=a_f.*mute_spt;
 b=real(ifft(b_f));
-
+b=b(1:nt_old);
 % for i=1:nt
 %     a=a*(-1)^i;
 %     b=b*(-1)^i;

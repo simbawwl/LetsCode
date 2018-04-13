@@ -1,38 +1,35 @@
 from rsf.proj import *
 
 
-Result('rfl_p',
+Result('norm_rfl_p',
        '''
-	   byte gainpanel=all clip=1e0 bar=bar.rsf|
-       grey3 title="PP image" 
-       color=i scalebar=y barreverse=y
-	   maxval=1e1 minval=-1e1
-       flat=y frame1=90 frame2=75 frame3=71 
+	   window f1=10 |
+	   byte gainpanel=all clip=5e-4 bar=bar.rsf|
+       grey3 title="" 
+       color=i scalebar=y barreverse=y 
+	   maxval=5e-4 minval=-5e-4
+       flat=y frame1=52 frame2=74 frame3=54 
        ''')
 
-Result('rfl_s',
+Result('norm_rfl_s',
        '''
-	   byte gainpanel=all clip=1e0 bar=bar.rsf|
-       grey3 title="PS image" 
+	   window f1=10 |
+	   byte gainpanel=all clip=4e-4 bar=bar.rsf|
+       grey3 title="" 
        color=i scalebar=y barreverse=y
-	   maxval=2e1 minval=-2e1
-       flat=y frame1=90 frame2=75 frame3=71
+	   maxval=5e-4 minval=-5e-4
+       flat=y frame1=52 frame2=74 frame3=54
        ''')
 
 Result('model',
        '''
+	   window f1=10 |
 	   byte gainpanel=all maxval=6 minval=2 bias=4 bar=bar.rsf|
-       grey3 title="The model" 
-       color=i scalebar=y barlabel="P-wave velocity (km/s)"
-	   maxval=6 minval=2 bias=4
-       flat=y frame1=20 frame2=75 frame3=71
+       grey3 title="" 
+       color=i scalebar=y polarity=y barlabel="P-wave velocity (km/s)"
+	   maxval=6 minval=2 bias=4  nreserve=9
+       flat=y frame1=52 frame2=74 frame3=54
 
        ''')
 End()
 
-#Result('rfl_p',
-#       '''
-#       laplac3 | grey title="PP image" clip=3e-5 
-#       color=i gainpanel=a barreverse=y
-#       ''')
-#End()

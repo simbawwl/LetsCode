@@ -7,11 +7,11 @@ from rsf.proj import *
 #       flat=y frame1=80 frame2=150 frame3=150 
 #       ''')
 
-	#window f1=50 n1=301 f2=100 n2=301 n3=140 | 
+	#window f1=1 n1=151 f2=200 n2=151 n3=140 | 
 #### Window the data#
 Flow('overthrust_part','overthrust',
        '''
-	window f1=0 n1=151 f2=0 n2=151 n3=140 | 
+	window f1=50 n1=151 f2=100 n2=151 n3=140 | 
 	scale dscale=0.001 | transp plane=13
        ''')
 #### Check results
@@ -64,7 +64,7 @@ Result('vel_real',
        grey3 title="The model"
        color=i scalebar=y barlabel="P-wave velocity (m/s)"
        maxval=6 minval=2 bias=4
-       flat=y frame1=90 frame2=160 frame3=160
+       flat=y frame1=90 frame2=75 frame3=75
 
        ''')
 End()

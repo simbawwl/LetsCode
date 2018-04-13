@@ -20,4 +20,6 @@
 
 	data_format="native_float"
 	esize=4
-	in="../over_model/vp_real_model"
+	#in="../over_model/vp_real_model"
+	#in="../over_model/vel_real.rsf@"
+	in="../over_model/vp_sm_model"
